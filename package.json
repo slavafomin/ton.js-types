@@ -27,5 +27,8 @@
   "files": [
     "types/",
     "README.md"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
