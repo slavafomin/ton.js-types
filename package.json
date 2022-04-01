@@ -1,6 +1,6 @@
 {
   "name": "@ton.js/types",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "TON Blockchain TypeScript Type Declarations",
   "types": "types/index.d.ts",
   "keywords": [
@@ -26,6 +26,7 @@
   "license": "MIT",
   "files": [
     "types/",
+    "index.js",
     "README.md"
   ],
   "publishConfig": {
