@@ -1,6 +1,6 @@
 {
   "name": "@ton.js/types",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "TON Blockchain TypeScript Type Declarations",
   "types": "types/index.d.ts",
   "keywords": [
