@@ -1,0 +1,31 @@
+{
+  "name": "@ton.js/types",
+  "version": "0.0.1",
+  "description": "TON Blockchain TypeScript Type Declarations",
+  "types": "types/index.d.ts",
+  "keywords": [
+    "blockchain",
+    "ton",
+    "ton.js",
+    "tonlib",
+    "type-declarations",
+    "types",
+    "typescript"
+  ],
+  "author": {
+    "name": "Vladislav Kibenko",
+    "url": "https://gist.github.com/wolframdeus"
+  },
+  "contributors": [
+    {
+      "name": "Slava Fomin II",
+      "email": "slava@fomin.io",
+      "url": "https://github.com/slavafomin"
+    }
+  ],
+  "license": "MIT",
+  "files": [
+    "types/",
+    "README.md"
+  ]
+}
