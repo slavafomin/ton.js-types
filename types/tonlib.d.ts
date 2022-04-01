@@ -4,19 +4,6 @@
  */
 export namespace TonLib {
   export namespace Types {
-    export type Vector<T> = (T)[];
-    export type String = string;
-    export type SecureString = string;
-    export type SecureBytes = string;
-    export type Object = Record<string, unknown>;
-    export type Int64 = number;
-    export type Int53 = number;
-    export type Int32 = number;
-    export type Function = unknown;
-    export type Double = number;
-    export type Bytes = string;
-    export type Bool = boolean;
-    export type NatConst = number;
     export type AccountAddress = Combinators.AccountAddress
     export type AccountList = Combinators.AccountList
     export type AccountRevisionList = Combinators.AccountRevisionList
@@ -88,6 +75,16 @@ export namespace TonLib {
       | Combinators.UpdateSendLiteServerQuery
       | Combinators.UpdateSyncState
     );
+    export namespace Blocks {
+      export type AccountTransactionId = (
+        | Combinators.Blocks.AccountTransactionId
+      );
+      export type Header = Combinators.Blocks.Header
+      export type MasterchainInfo = Combinators.Blocks.MasterchainInfo
+      export type Shards = Combinators.Blocks.Shards
+      export type Transactions = Combinators.Blocks.Transactions
+    }
+    
     export namespace Dns {
       export type Action = (
         | Combinators.Dns.ActionDeleteAll
@@ -112,6 +109,7 @@ export namespace TonLib {
     
     export namespace LiteServer {
       export type Info = Combinators.LiteServer.Info
+      export type TransactionId = Combinators.Blocks.ShortTxId
     }
     
     export namespace Msg {
@@ -205,22 +203,22 @@ export namespace TonLib {
       '@type': T;
     }
     export interface AccountAddress extends Type<'accountAddress'>{
-      account_address: Types.String;
+      account_address: string;
     }
     export interface AccountList extends Type<'accountList'>{
-      accounts: Types.Vector<Types.FullAccountState>;
+      accounts: (Types.FullAccountState)[];
     }
     export interface AccountRevisionList extends Type<'accountRevisionList'>{
-      revisions: Types.Vector<Types.FullAccountState>;
+      revisions: (Types.FullAccountState)[];
     }
     export interface ActionNoop extends Type<'actionNoop'>{
     }
     export interface ActionMsg extends Type<'actionMsg'>{
-      messages: Types.Vector<Types.Msg.Message>;
-      allow_send_to_uninited: Types.Bool;
+      messages: (Types.Msg.Message)[];
+      allow_send_to_uninited: boolean;
     }
     export interface ActionDns extends Type<'actionDns'>{
-      actions: Types.Vector<Types.Dns.Action>;
+      actions: (Types.Dns.Action)[];
     }
     export interface ActionPchan extends Type<'actionPchan'>{
       action: Types.Pchan.Action;
@@ -229,79 +227,79 @@ export namespace TonLib {
       action: Types.Rwallet.Action;
     }
     export interface AdnlAddress extends Type<'adnlAddress'>{
-      adnl_address: Types.String;
+      adnl_address: string;
     }
     export interface Bip39Hints extends Type<'bip39Hints'>{
-      words: Types.Vector<Types.String>;
+      words: (string)[];
     }
     export interface Config extends Type<'config'>{
-      config: Types.String;
-      blockchain_name: Types.String;
-      use_callbacks_for_network: Types.Bool;
-      ignore_cache: Types.Bool;
+      config: string;
+      blockchain_name: string;
+      use_callbacks_for_network: boolean;
+      ignore_cache: boolean;
     }
     export interface Data extends Type<'data'>{
-      bytes: Types.SecureBytes;
+      bytes: string;
     }
     export interface Error extends Type<'error'>{
-      code: Types.Int32;
-      message: Types.String;
+      code: number;
+      message: string;
     }
     export interface ExportedEncryptedKey extends Type<'exportedEncryptedKey'>{
-      data: Types.SecureBytes;
+      data: string;
     }
     export interface ExportedKey extends Type<'exportedKey'>{
-      word_list: Types.Vector<Types.SecureString>;
+      word_list: (string)[];
     }
     export interface ExportedPemKey extends Type<'exportedPemKey'>{
-      pem: Types.SecureString;
+      pem: string;
     }
     export interface ExportedUnencryptedKey extends Type<'exportedUnencryptedKey'>{
-      data: Types.SecureBytes;
+      data: string;
     }
     export interface Fees extends Type<'fees'>{
-      in_fwd_fee: Types.Int53;
-      storage_fee: Types.Int53;
-      gas_fee: Types.Int53;
-      fwd_fee: Types.Int53;
+      in_fwd_fee: number;
+      storage_fee: number;
+      gas_fee: number;
+      fwd_fee: number;
     }
     export interface FullAccountState extends Type<'fullAccountState'>{
       address: Types.AccountAddress;
-      balance: Types.Int64;
+      balance: number;
       last_transaction_id: Types.Internal.TransactionId;
       block_id: Types.Ton.BlockIdExt;
-      sync_utime: Types.Int53;
+      sync_utime: number;
       account_state: Types.AccountState;
-      revision: Types.Int32;
+      revision: number;
     }
     export interface InputKeyRegular extends Type<'inputKeyRegular'>{
       key: Types.Key;
-      local_password: Types.SecureBytes;
+      local_password: string;
     }
     export interface InputKeyFake extends Type<'inputKeyFake'>{
     }
     export interface Key extends Type<'key'>{
-      public_key: Types.String;
-      secret: Types.SecureBytes;
+      public_key: string;
+      secret: string;
     }
     export interface KeyStoreTypeDirectory extends Type<'keyStoreTypeDirectory'>{
-      directory: Types.String;
+      directory: string;
     }
     export interface KeyStoreTypeInMemory extends Type<'keyStoreTypeInMemory'>{
     }
     export interface LogStreamDefault extends Type<'logStreamDefault'>{
     }
     export interface LogStreamFile extends Type<'logStreamFile'>{
-      path: Types.String;
-      max_file_size: Types.Int53;
+      path: string;
+      max_file_size: number;
     }
     export interface LogStreamEmpty extends Type<'logStreamEmpty'>{
     }
     export interface LogTags extends Type<'logTags'>{
-      tags: Types.Vector<Types.String>;
+      tags: (string)[];
     }
     export interface LogVerbosityLevel extends Type<'logVerbosityLevel'>{
-      verbosity_level: Types.Int32;
+      verbosity_level: number;
     }
     export interface Ok extends Type<'ok'>{
     }
@@ -312,48 +310,48 @@ export namespace TonLib {
     export interface SyncStateDone extends Type<'syncStateDone'>{
     }
     export interface SyncStateInProgress extends Type<'syncStateInProgress'>{
-      from_seqno: Types.Int32;
-      to_seqno: Types.Int32;
-      current_seqno: Types.Int32;
+      from_seqno: number;
+      to_seqno: number;
+      current_seqno: number;
     }
     export interface UnpackedAccountAddress extends Type<'unpackedAccountAddress'>{
-      workchain_id: Types.Int32;
-      bounceable: Types.Bool;
-      testnet: Types.Bool;
-      addr: Types.Bytes;
+      workchain_id: number;
+      bounceable: boolean;
+      testnet: boolean;
+      addr: string;
     }
     export interface UpdateSendLiteServerQuery extends Type<'updateSendLiteServerQuery'>{
-      id: Types.Int64;
-      data: Types.Bytes;
+      id: number;
+      data: string;
     }
     export interface UpdateSyncState extends Type<'updateSyncState'>{
       sync_state: Types.SyncState;
     }
     export interface AddLogMessage extends Type<'addLogMessage'>{
-      verbosity_level: Types.Int32;
-      text: Types.String;
+      verbosity_level: number;
+      text: string;
     }
     export interface ChangeLocalPassword extends Type<'changeLocalPassword'>{
       input_key: Types.InputKey;
-      new_local_password: Types.SecureBytes;
+      new_local_password: string;
     }
     export interface Close extends Type<'close'>{
     }
     export interface CreateNewKey extends Type<'createNewKey'>{
-      local_password: Types.SecureBytes;
-      mnemonic_password: Types.SecureBytes;
-      random_extra_seed: Types.SecureBytes;
+      local_password: string;
+      mnemonic_password: string;
+      random_extra_seed: string;
     }
     export interface CreateQuery extends Type<'createQuery'>{
       private_key: Types.InputKey;
       address: Types.AccountAddress;
-      timeout: Types.Int32;
+      timeout: number;
       action: Types.Action;
       initial_account_state: Types.InitialAccountState;
     }
     export interface Decrypt extends Type<'decrypt'>{
-      encrypted_data: Types.SecureBytes;
-      secret: Types.SecureBytes;
+      encrypted_data: string;
+      secret: string;
     }
     export interface DeleteAllKeys extends Type<'deleteAllKeys'>{
     }
@@ -361,164 +359,164 @@ export namespace TonLib {
       key: Types.Key;
     }
     export interface Encrypt extends Type<'encrypt'>{
-      decrypted_data: Types.SecureBytes;
-      secret: Types.SecureBytes;
+      decrypted_data: string;
+      secret: string;
     }
     export interface ExportEncryptedKey extends Type<'exportEncryptedKey'>{
       input_key: Types.InputKey;
-      key_password: Types.SecureBytes;
+      key_password: string;
     }
     export interface ExportKey extends Type<'exportKey'>{
       input_key: Types.InputKey;
     }
     export interface ExportPemKey extends Type<'exportPemKey'>{
       input_key: Types.InputKey;
-      key_password: Types.SecureBytes;
+      key_password: string;
     }
     export interface ExportUnencryptedKey extends Type<'exportUnencryptedKey'>{
       input_key: Types.InputKey;
     }
     export interface GetAccountAddress extends Type<'getAccountAddress'>{
       initial_account_state: Types.InitialAccountState;
-      revision: Types.Int32;
-      workchain_id: Types.Int32;
+      revision: number;
+      workchain_id: number;
     }
     export interface GetAccountState extends Type<'getAccountState'>{
       account_address: Types.AccountAddress;
     }
     export interface GetBip39Hints extends Type<'getBip39Hints'>{
-      prefix: Types.String;
+      prefix: string;
     }
     export interface GetLogStream extends Type<'getLogStream'>{
     }
     export interface GetLogTagVerbosityLevel extends Type<'getLogTagVerbosityLevel'>{
-      tag: Types.String;
+      tag: string;
     }
     export interface GetLogTags extends Type<'getLogTags'>{
     }
     export interface GetLogVerbosityLevel extends Type<'getLogVerbosityLevel'>{
     }
     export interface GuessAccount extends Type<'guessAccount'>{
-      public_key: Types.String;
-      rwallet_init_public_key: Types.String;
+      public_key: string;
+      rwallet_init_public_key: string;
     }
     export interface GuessAccountRevision extends Type<'guessAccountRevision'>{
       initial_account_state: Types.InitialAccountState;
-      workchain_id: Types.Int32;
+      workchain_id: number;
     }
     export interface ImportEncryptedKey extends Type<'importEncryptedKey'>{
-      local_password: Types.SecureBytes;
-      key_password: Types.SecureBytes;
+      local_password: string;
+      key_password: string;
       exported_encrypted_key: Types.ExportedEncryptedKey;
     }
     export interface ImportKey extends Type<'importKey'>{
-      local_password: Types.SecureBytes;
-      mnemonic_password: Types.SecureBytes;
+      local_password: string;
+      mnemonic_password: string;
       exported_key: Types.ExportedKey;
     }
     export interface ImportPemKey extends Type<'importPemKey'>{
-      local_password: Types.SecureBytes;
-      key_password: Types.SecureBytes;
+      local_password: string;
+      key_password: string;
       exported_key: Types.ExportedPemKey;
     }
     export interface ImportUnencryptedKey extends Type<'importUnencryptedKey'>{
-      local_password: Types.SecureBytes;
+      local_password: string;
       exported_unencrypted_key: Types.ExportedUnencryptedKey;
     }
     export interface Init extends Type<'init'>{
       options: Types.Options;
     }
     export interface Kdf extends Type<'kdf'>{
-      password: Types.SecureBytes;
-      salt: Types.SecureBytes;
-      iterations: Types.Int32;
+      password: string;
+      salt: string;
+      iterations: number;
     }
     export interface OnLiteServerQueryError extends Type<'onLiteServerQueryError'>{
-      id: Types.Int64;
+      id: number;
       error: Types.Error;
     }
     export interface OnLiteServerQueryResult extends Type<'onLiteServerQueryResult'>{
-      id: Types.Int64;
-      bytes: Types.Bytes;
+      id: number;
+      bytes: string;
     }
     export interface PackAccountAddress extends Type<'packAccountAddress'>{
       account_address: Types.UnpackedAccountAddress;
     }
     export interface RunTests extends Type<'runTests'>{
-      dir: Types.String;
+      dir: string;
     }
     export interface SetLogStream extends Type<'setLogStream'>{
       log_stream: Types.LogStream;
     }
     export interface SetLogTagVerbosityLevel extends Type<'setLogTagVerbosityLevel'>{
-      tag: Types.String;
-      new_verbosity_level: Types.Int32;
+      tag: string;
+      new_verbosity_level: number;
     }
     export interface SetLogVerbosityLevel extends Type<'setLogVerbosityLevel'>{
-      new_verbosity_level: Types.Int32;
+      new_verbosity_level: number;
     }
     export interface Sync extends Type<'sync'>{
     }
     export interface UnpackAccountAddress extends Type<'unpackAccountAddress'>{
-      account_address: Types.String;
+      account_address: string;
     }
     export interface WithBlock extends Type<'withBlock'>{
       id: Types.Ton.BlockIdExt;
-      function: Types.Function;
+      function: unknown;
     }
     export namespace Raw {
       export interface AccountState extends Type<'raw.accountState'>{
-        code: Types.Bytes;
-        data: Types.Bytes;
-        frozen_hash: Types.Bytes;
+        code: string;
+        data: string;
+        frozen_hash: string;
       }
       export interface InitialAccountState extends Type<'raw.initialAccountState'>{
-        code: Types.Bytes;
-        data: Types.Bytes;
+        code: string;
+        data: string;
       }
       export interface FullAccountState extends Type<'raw.fullAccountState'>{
-        balance: Types.Int64;
-        code: Types.Bytes;
-        data: Types.Bytes;
+        balance: number;
+        code: string;
+        data: string;
         last_transaction_id: Types.Internal.TransactionId;
         block_id: Types.Ton.BlockIdExt;
-        frozen_hash: Types.Bytes;
-        sync_utime: Types.Int53;
+        frozen_hash: string;
+        sync_utime: number;
       }
       export interface Message extends Type<'raw.message'>{
         source: Types.AccountAddress;
         destination: Types.AccountAddress;
-        value: Types.Int64;
-        fwd_fee: Types.Int64;
-        ihr_fee: Types.Int64;
-        created_lt: Types.Int64;
-        body_hash: Types.Bytes;
+        value: number;
+        fwd_fee: number;
+        ihr_fee: number;
+        created_lt: number;
+        body_hash: string;
         msg_data: Types.Msg.Data;
       }
       export interface Transaction extends Type<'raw.transaction'>{
-        utime: Types.Int53;
-        data: Types.Bytes;
+        utime: number;
+        data: string;
         transaction_id: Types.Internal.TransactionId;
-        fee: Types.Int64;
-        storage_fee: Types.Int64;
-        other_fee: Types.Int64;
+        fee: number;
+        storage_fee: number;
+        other_fee: number;
         in_msg: Types.Raw.Message;
-        out_msgs: Types.Vector<Types.Raw.Message>;
+        out_msgs: (Types.Raw.Message)[];
       }
       export interface Transactions extends Type<'raw.transactions'>{
-        transactions: Types.Vector<Types.Raw.Transaction>;
+        transactions: (Types.Raw.Transaction)[];
         previous_transaction_id: Types.Internal.TransactionId;
       }
       export interface CreateAndSendMessage extends Type<'raw.createAndSendMessage'>{
         destination: Types.AccountAddress;
-        initial_account_state: Types.Bytes;
-        data: Types.Bytes;
+        initial_account_state: string;
+        data: string;
       }
       export interface CreateQuery extends Type<'raw.createQuery'>{
         destination: Types.AccountAddress;
-        init_code: Types.Bytes;
-        init_data: Types.Bytes;
-        body: Types.Bytes;
+        init_code: string;
+        init_data: string;
+        body: string;
       }
       export interface GetAccountState extends Type<'raw.getAccountState'>{
         account_address: Types.AccountAddress;
@@ -529,41 +527,41 @@ export namespace TonLib {
         from_transaction_id: Types.Internal.TransactionId;
       }
       export interface SendMessage extends Type<'raw.sendMessage'>{
-        body: Types.Bytes;
+        body: string;
       }
     }
     
     export namespace Wallet {
       export namespace V3 {
         export interface AccountState extends Type<'wallet.v3.accountState'>{
-          wallet_id: Types.Int64;
-          seqno: Types.Int32;
+          wallet_id: number;
+          seqno: number;
         }
         export interface InitialAccountState extends Type<'wallet.v3.initialAccountState'>{
-          public_key: Types.String;
-          wallet_id: Types.Int64;
+          public_key: string;
+          wallet_id: number;
         }
       }
       
       export namespace Highload {
         export namespace V1 {
           export interface AccountState extends Type<'wallet.highload.v1.accountState'>{
-            wallet_id: Types.Int64;
-            seqno: Types.Int32;
+            wallet_id: number;
+            seqno: number;
           }
           export interface InitialAccountState extends Type<'wallet.highload.v1.initialAccountState'>{
-            public_key: Types.String;
-            wallet_id: Types.Int64;
+            public_key: string;
+            wallet_id: number;
           }
         }
         
         export namespace V2 {
           export interface AccountState extends Type<'wallet.highload.v2.accountState'>{
-            wallet_id: Types.Int64;
+            wallet_id: number;
           }
           export interface InitialAccountState extends Type<'wallet.highload.v2.initialAccountState'>{
-            public_key: Types.String;
-            wallet_id: Types.Int64;
+            public_key: string;
+            wallet_id: number;
           }
         }
       }
@@ -571,31 +569,31 @@ export namespace TonLib {
     
     export namespace Dns {
       export interface AccountState extends Type<'dns.accountState'>{
-        wallet_id: Types.Int64;
+        wallet_id: number;
       }
       export interface InitialAccountState extends Type<'dns.initialAccountState'>{
-        public_key: Types.String;
-        wallet_id: Types.Int64;
+        public_key: string;
+        wallet_id: number;
       }
       export interface ActionDeleteAll extends Type<'dns.actionDeleteAll'>{
       }
       export interface ActionDelete extends Type<'dns.actionDelete'>{
-        name: Types.String;
-        category: Types.Int32;
+        name: string;
+        category: number;
       }
       export interface ActionSet extends Type<'dns.actionSet'>{
         entry: Types.Dns.Entry;
       }
       export interface Entry extends Type<'dns.entry'>{
-        name: Types.String;
-        category: Types.Int32;
+        name: string;
+        category: number;
         entry: Types.Dns.EntryData;
       }
       export interface EntryDataUnknown extends Type<'dns.entryDataUnknown'>{
-        bytes: Types.Bytes;
+        bytes: string;
       }
       export interface EntryDataText extends Type<'dns.entryDataText'>{
-        text: Types.String;
+        text: string;
       }
       export interface EntryDataNextResolver extends Type<'dns.entryDataNextResolver'>{
         resolver: Types.AccountAddress;
@@ -607,38 +605,38 @@ export namespace TonLib {
         adnl_address: Types.AdnlAddress;
       }
       export interface Resolved extends Type<'dns.resolved'>{
-        entries: Types.Vector<Types.Dns.Entry>;
+        entries: (Types.Dns.Entry)[];
       }
       export interface Resolve extends Type<'dns.resolve'>{
         account_address: Types.AccountAddress;
-        name: Types.String;
-        category: Types.Int32;
-        ttl: Types.Int32;
+        name: string;
+        category: number;
+        ttl: number;
       }
     }
     
     export namespace Rwallet {
       export interface AccountState extends Type<'rwallet.accountState'>{
-        wallet_id: Types.Int64;
-        seqno: Types.Int32;
-        unlocked_balance: Types.Int64;
+        wallet_id: number;
+        seqno: number;
+        unlocked_balance: number;
         config: Types.Rwallet.Config;
       }
       export interface InitialAccountState extends Type<'rwallet.initialAccountState'>{
-        init_public_key: Types.String;
-        public_key: Types.String;
-        wallet_id: Types.Int64;
+        init_public_key: string;
+        public_key: string;
+        wallet_id: number;
       }
       export interface ActionInit extends Type<'rwallet.actionInit'>{
         config: Types.Rwallet.Config;
       }
       export interface Config extends Type<'rwallet.config'>{
-        start_at: Types.Int53;
-        limits: Types.Vector<Types.Rwallet.Limit>;
+        start_at: number;
+        limits: (Types.Rwallet.Limit)[];
       }
       export interface Limit extends Type<'rwallet.limit'>{
-        seconds: Types.Int32;
-        value: Types.Int64;
+        seconds: number;
+        value: number;
       }
     }
     
@@ -646,60 +644,60 @@ export namespace TonLib {
       export interface AccountState extends Type<'pchan.accountState'>{
         config: Types.Pchan.Config;
         state: Types.Pchan.State;
-        description: Types.String;
+        description: string;
       }
       export interface InitialAccountState extends Type<'pchan.initialAccountState'>{
         config: Types.Pchan.Config;
       }
       export interface ActionInit extends Type<'pchan.actionInit'>{
-        inc_A: Types.Int64;
-        inc_B: Types.Int64;
-        min_A: Types.Int64;
-        min_B: Types.Int64;
+        inc_A: number;
+        inc_B: number;
+        min_A: number;
+        min_B: number;
       }
       export interface ActionClose extends Type<'pchan.actionClose'>{
-        extra_A: Types.Int64;
-        extra_B: Types.Int64;
+        extra_A: number;
+        extra_B: number;
         promise: Types.Pchan.Promise;
       }
       export interface ActionTimeout extends Type<'pchan.actionTimeout'>{
       }
       export interface Config extends Type<'pchan.config'>{
-        alice_public_key: Types.String;
+        alice_public_key: string;
         alice_address: Types.AccountAddress;
-        bob_public_key: Types.String;
+        bob_public_key: string;
         bob_address: Types.AccountAddress;
-        init_timeout: Types.Int32;
-        close_timeout: Types.Int32;
-        channel_id: Types.Int64;
+        init_timeout: number;
+        close_timeout: number;
+        channel_id: number;
       }
       export interface Promise extends Type<'pchan.promise'>{
-        signature: Types.Bytes;
-        promise_A: Types.Int64;
-        promise_B: Types.Int64;
-        channel_id: Types.Int64;
+        signature: string;
+        promise_A: number;
+        promise_B: number;
+        channel_id: number;
       }
       export interface StateInit extends Type<'pchan.stateInit'>{
-        signed_A: Types.Bool;
-        signed_B: Types.Bool;
-        min_A: Types.Int64;
-        min_B: Types.Int64;
-        expire_at: Types.Int53;
-        A: Types.Int64;
-        B: Types.Int64;
+        signed_A: boolean;
+        signed_B: boolean;
+        min_A: number;
+        min_B: number;
+        expire_at: number;
+        A: number;
+        B: number;
       }
       export interface StateClose extends Type<'pchan.stateClose'>{
-        signed_A: Types.Bool;
-        signed_B: Types.Bool;
-        min_A: Types.Int64;
-        min_B: Types.Int64;
-        expire_at: Types.Int53;
-        A: Types.Int64;
-        B: Types.Int64;
+        signed_A: boolean;
+        signed_B: boolean;
+        min_A: number;
+        min_B: number;
+        expire_at: number;
+        A: number;
+        B: number;
       }
       export interface StatePayout extends Type<'pchan.statePayout'>{
-        A: Types.Int64;
-        B: Types.Int64;
+        A: number;
+        B: number;
       }
       export interface PackPromise extends Type<'pchan.packPromise'>{
         promise: Types.Pchan.Promise;
@@ -709,47 +707,113 @@ export namespace TonLib {
         promise: Types.Pchan.Promise;
       }
       export interface UnpackPromise extends Type<'pchan.unpackPromise'>{
-        data: Types.SecureBytes;
+        data: string;
       }
       export interface ValidatePromise extends Type<'pchan.validatePromise'>{
-        public_key: Types.Bytes;
+        public_key: string;
         promise: Types.Pchan.Promise;
       }
     }
     
     export namespace Uninited {
       export interface AccountState extends Type<'uninited.accountState'>{
-        frozen_hash: Types.Bytes;
+        frozen_hash: string;
+      }
+    }
+    
+    export namespace Blocks {
+      export interface AccountTransactionId extends Type<'blocks.accountTransactionId'>{
+        account: string;
+        lt: number;
+      }
+      export interface Header extends Type<'blocks.header'>{
+        id: Types.Ton.BlockIdExt;
+        global_id: number;
+        version: number;
+        after_merge: boolean;
+        after_split: boolean;
+        before_split: boolean;
+        want_merge: boolean;
+        want_split: boolean;
+        validator_list_hash_short: number;
+        catchain_seqno: number;
+        min_ref_mc_seqno: number;
+        is_key_block: boolean;
+        prev_key_block_seqno: number;
+        start_lt: number;
+        end_lt: number;
+        vert_seqno: number;
+        prev_blocks: (Types.Ton.BlockIdExt)[];
+      }
+      export interface MasterchainInfo extends Type<'blocks.masterchainInfo'>{
+        last: Types.Ton.BlockIdExt;
+        state_root_hash: string;
+        init: Types.Ton.BlockIdExt;
+      }
+      export interface Shards extends Type<'blocks.shards'>{
+        shards: (Types.Ton.BlockIdExt)[];
+      }
+      export interface Transactions extends Type<'blocks.transactions'>{
+        id: Types.Ton.BlockIdExt;
+        req_count: number;
+        incomplete: boolean;
+        transactions: (Types.LiteServer.TransactionId)[];
+      }
+      export interface ShortTxId extends Type<'blocks.shortTxId'>{
+        mode: number;
+        account: string;
+        lt: number;
+        hash: string;
+      }
+      export interface GetBlockHeader extends Type<'blocks.getBlockHeader'>{
+        id: Types.Ton.BlockIdExt;
+      }
+      export interface GetMasterchainInfo extends Type<'blocks.getMasterchainInfo'>{
+      }
+      export interface GetShards extends Type<'blocks.getShards'>{
+        id: Types.Ton.BlockIdExt;
+      }
+      export interface GetTransactions extends Type<'blocks.getTransactions'>{
+        id: Types.Ton.BlockIdExt;
+        mode: number;
+        count: number;
+        after: Types.Blocks.AccountTransactionId;
+      }
+      export interface LookupBlock extends Type<'blocks.lookupBlock'>{
+        mode: number;
+        id: Types.Internal.BlockId;
+        lt: number;
+        utime: number;
       }
     }
     
     export namespace Ton {
       export interface BlockId extends Type<'ton.blockId'>{
-        workchain: Types.Int32;
-        shard: Types.Int64;
-        seqno: Types.Int32;
+        workchain: number;
+        shard: number;
+        seqno: number;
       }
       export interface BlockIdExt extends Type<'ton.blockIdExt'>{
-        workchain: Types.Int32;
-        shard: Types.Int64;
-        seqno: Types.Int32;
-        root_hash: Types.Bytes;
-        file_hash: Types.Bytes;
+        workchain: number;
+        shard: number;
+        seqno: number;
+        root_hash: string;
+        file_hash: string;
       }
     }
     
     export namespace Internal {
       export interface TransactionId extends Type<'internal.transactionId'>{
-        lt: Types.Int64;
-        hash: Types.Bytes;
+        lt: number;
+        hash: string;
       }
     }
     
     export namespace LiteServer {
       export interface Info extends Type<'liteServer.info'>{
-        now: Types.Int53;
-        version: Types.Int32;
-        capabilities: Types.Int64;
+        now: number;
+        version: number;
+        capabilities: number;
       }
       export interface GetInfo extends Type<'liteServer.getInfo'>{
       }
@@ -757,52 +821,53 @@ export namespace TonLib {
     
     export namespace Msg {
       export interface DataRaw extends Type<'msg.dataRaw'>{
-        body: Types.Bytes;
-        init_state: Types.Bytes;
+        body: string;
+        init_state: string;
       }
       export interface DataText extends Type<'msg.dataText'>{
-        text: Types.Bytes;
+        text: string;
       }
       export interface DataDecryptedText extends Type<'msg.dataDecryptedText'>{
-        text: Types.Bytes;
+        text: string;
       }
       export interface DataEncryptedText extends Type<'msg.dataEncryptedText'>{
-        text: Types.Bytes;
+        text: string;
       }
       export interface DataDecrypted extends Type<'msg.dataDecrypted'>{
-        proof: Types.Bytes;
+        proof: string;
         data: Types.Msg.Data;
       }
       export interface DataDecryptedArray extends Type<'msg.dataDecryptedArray'>{
-        elements: Types.Vector<Types.Msg.DataDecrypted>;
+        elements: (Types.Msg.DataDecrypted)[];
       }
       export interface DataEncrypted extends Type<'msg.dataEncrypted'>{
         source: Types.AccountAddress;
         data: Types.Msg.Data;
       }
       export interface DataEncryptedArray extends Type<'msg.dataEncryptedArray'>{
-        elements: Types.Vector<Types.Msg.DataEncrypted>;
+        elements: (Types.Msg.DataEncrypted)[];
       }
       export interface Message extends Type<'msg.message'>{
         destination: Types.AccountAddress;
-        public_key: Types.String;
-        amount: Types.Int64;
+        public_key: string;
+        amount: number;
         data: Types.Msg.Data;
+        send_mode: number;
       }
       export interface Decrypt extends Type<'msg.decrypt'>{
         input_key: Types.InputKey;
         data: Types.Msg.DataEncryptedArray;
       }
       export interface DecryptWithProof extends Type<'msg.decryptWithProof'>{
-        proof: Types.Bytes;
+        proof: string;
         data: Types.Msg.DataEncrypted;
       }
     }
     
     export namespace Options {
       export interface ConfigInfo extends Type<'options.configInfo'>{
-        default_wallet_id: Types.Int64;
-        default_rwallet_init_public_key: Types.String;
+        default_wallet_id: number;
+        default_rwallet_init_public_key: string;
       }
       export interface Info extends Type<'options.info'>{
         config_info: Types.Options.ConfigInfo;
@@ -818,76 +883,76 @@ export namespace TonLib {
     export namespace Query {
       export interface Fees extends Type<'query.fees'>{
         source_fees: Types.Fees;
-        destination_fees: Types.Vector<Types.Fees>;
+        destination_fees: (Types.Fees)[];
       }
       export interface Info extends Type<'query.info'>{
-        id: Types.Int53;
-        valid_until: Types.Int53;
-        body_hash: Types.Bytes;
-        body: Types.Bytes;
-        init_state: Types.Bytes;
+        id: number;
+        valid_until: number;
+        body_hash: string;
+        body: string;
+        init_state: string;
       }
       export interface EstimateFees extends Type<'query.estimateFees'>{
-        id: Types.Int53;
-        ignore_chksig: Types.Bool;
+        id: number;
+        ignore_chksig: boolean;
       }
       export interface Forget extends Type<'query.forget'>{
-        id: Types.Int53;
+        id: number;
       }
       export interface GetInfo extends Type<'query.getInfo'>{
-        id: Types.Int53;
+        id: number;
       }
       export interface Send extends Type<'query.send'>{
-        id: Types.Int53;
+        id: number;
       }
     }
     
     export namespace Smc {
       export interface Info extends Type<'smc.info'>{
-        id: Types.Int53;
+        id: number;
       }
       export interface MethodIdNumber extends Type<'smc.methodIdNumber'>{
-        number: Types.Int32;
+        number: number;
       }
       export interface MethodIdName extends Type<'smc.methodIdName'>{
-        name: Types.String;
+        name: string;
       }
       export interface RunResult extends Type<'smc.runResult'>{
-        gas_used: Types.Int53;
-        stack: Types.Vector<Types.Tvm.StackEntry>;
-        exit_code: Types.Int32;
+        gas_used: number;
+        stack: (Types.Tvm.StackEntry)[];
+        exit_code: number;
       }
       export interface GetCode extends Type<'smc.getCode'>{
-        id: Types.Int53;
+        id: number;
       }
       export interface GetData extends Type<'smc.getData'>{
-        id: Types.Int53;
+        id: number;
       }
       export interface GetState extends Type<'smc.getState'>{
-        id: Types.Int53;
+        id: number;
       }
       export interface Load extends Type<'smc.load'>{
         account_address: Types.AccountAddress;
       }
       export interface RunGetMethod extends Type<'smc.runGetMethod'>{
-        id: Types.Int53;
+        id: number;
         method: Types.Smc.MethodId;
-        stack: Types.Vector<Types.Tvm.StackEntry>;
+        stack: (Types.Tvm.StackEntry)[];
       }
     }
     
     export namespace Tvm {
       export interface Cell extends Type<'tvm.cell'>{
-        bytes: Types.Bytes;
+        bytes: string;
       }
       export interface List extends Type<'tvm.list'>{
-        elements: Types.Vector<Types.Tvm.StackEntry>;
+        elements: (Types.Tvm.StackEntry)[];
       }
       export interface NumberDecimal extends Type<'tvm.numberDecimal'>{
-        number: Types.String;
+        number: string;
       }
       export interface Slice extends Type<'tvm.slice'>{
-        bytes: Types.Bytes;
+        bytes: string;
       }
       export interface StackEntrySlice extends Type<'tvm.stackEntrySlice'>{
         slice: Types.Tvm.Slice;
@@ -907,7 +972,7 @@ export namespace TonLib {
       export interface StackEntryUnsupported extends Type<'tvm.stackEntryUnsupported'>{
       }
       export interface Tuple extends Type<'tvm.tuple'>{
-        elements: Types.Vector<Types.Tvm.StackEntry>;
+        elements: (Types.Tvm.StackEntry)[];
       }
     }
   }
